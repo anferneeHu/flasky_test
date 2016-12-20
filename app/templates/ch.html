@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import "div.html" as dv %}
+{% block title %}Charts{% endblock %}
+
+
+{%block head%}
+{{super()}}
+<!-- echarts.js -->
+<script src="//cdn.bootcss.com/echarts/3.3.2/echarts.common.min.js"></script>
+{%endblock%}
+
+
+{% block body %}
+{{super()}}
+<script type="text/javascript">
+var query_addr = "/api/datas/"+"{{suite}}"+"/case_list"
+console.log(query_addr);
+$.getJSON(query_addr, function(data) { 
+    console.log(data)
+    console.log(data.case);
+    var myChart = new Array(data.case.length);
+    var query_a = new Array(data.case.length);
+    for (var i in data.case) {
+        console.log(data.case[i])
+        var c = data.case[i]
+        
+        {{dv.drawchart(suite)}}
+    };
+});
+</script>
+{% endblock %}
+
+
+
+

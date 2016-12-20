@@ -6,6 +6,12 @@ __pycache__/
 # vi temp file
 *.swp
 
+# bak file
+*.bak
+
+# dump file 
+*.dump
+
 # C extensions
 *.so
 

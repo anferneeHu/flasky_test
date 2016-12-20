@@ -1,0 +1,59 @@
+
+{% macro drawchart(suite) -%} 
+
+var idname = "div_{{suite}}_"+c
+console.log(idname)
+var div = document.createElement("div");
+div.id = idname
+div.style = "width: 600px;height:400px;"
+document.body.appendChild(div);
+console.log(i)
+myChart[i] = echarts.init(document.getElementById(idname));
+var option = {
+    title: {
+        text: ''
+    },
+    tooltip: {},
+    legend: {
+        data:[]
+    },
+    xAxis: {
+        data:[]
+    },
+    yAxis: {},
+    series: [{
+        name: 'data',
+        type: 'line',
+        data: []
+    }]
+};
+
+query_a[i] = '/api/datas/{{suite}}/'+c
+console.log(query_a[i]);
+(function (i) {
+$.getJSON(query_a[i], function(data){
+    console.log(i);
+    console.log(data);
+        myChart[i].setOption({
+            title: {
+                text : data.name
+            },
+            xAxis : {
+                data : data.x
+                    //data : ["a", "b", "c", "d"]
+            },
+            series : [ {
+                name : data.y_label,
+                data : data.y
+                    //data : [1,2,3,4]
+            }]
+        });
+});
+
+}) (i) ;
+myChart[i].setOption(option, true);
+
+
+{%- endmacro %}
+
+

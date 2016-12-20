@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Charts{% endblock %}
+
+{%block head%}
+{{super()}}
+<!-- echarts.js -->
+<script src="/static/js/echarts.js"></script>
+<script src="/static/js/jquery.min.js"></script>
+{%endblock%}
+
+
+{% block body%}
+{{super()}}
+<div id="chart_div"  style="width: 600px;height:400px;" ></div>
+<script type="text/javascript">
+var myChart = echarts.init(document.getElementById('chart_div'));
+var option = {
+    title: {
+        text: ''
+    },
+    tooltip: {},
+    legend: {
+        data:[]
+    },
+    xAxis: {
+        data:[]
+    },
+    yAxis: {},
+    series: [{
+        name: 'data',
+        type: 'line',
+        data: []
+    }]
+};
+
+console.log("{{suite}}")
+console.log("{{case}}")
+
+setTimeout( function() {$.getJSON('/api/datas/{{suite}}/{{case}}', function(data){
+
+    console.log(data.name)
+        myChart.setOption({
+            title: {
+                text : data.name
+            },
+            xAxis : {
+                data : data.x
+                    //data : ["a", "b", "c", "d"]
+            },
+            series : [ {
+                name : data.y_label,
+                data : data.y
+                    //data : [1,2,3,4]
+            }]
+        });
+});
+        }, 2000);
+myChart.setOption(option, true);
+
+</script>
+
+{% endblock %}
+
+
+
+
