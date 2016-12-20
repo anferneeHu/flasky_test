@@ -11,6 +11,9 @@ __pycache__/
 
 # dump file 
 *.dump
+*.mako
+
+
 
 # C extensions
 *.so
